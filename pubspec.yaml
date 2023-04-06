@@ -38,6 +38,7 @@ dependencies:
   sliding_sheet:
   font_awesome_flutter:
   webview_flutter: 2.0.12
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

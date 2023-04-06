@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:saurav_s_kamtalwar/github.dart';
+import 'package:http/http.dart' as http;
+
+import 'model/project.dart';
 
 class Projects extends StatefulWidget {
   const Projects({super.key});
@@ -101,6 +107,45 @@ class _ProjectsState extends State<Projects> {
     );
   }
 
+  bool load = false;
+  List<Project> myprojects = [];
+  Future<void> getprogects() async {
+    print("object");
+    String url = "https://centipede-jumper.cyclic.app/Projects";
+    var responce = await http.get(Uri.parse(url));
+    var jsondata = jsonDecode(responce.body);
+    jsondata.forEach((element) {
+      // if (element["_id"] != null &&
+      //     element["lang"] != null &&
+      //     element["title"] != null &&
+      //     element["description"] != null &&
+      //     element["star"] != null &&
+      //     element["githuburl"] != null &&
+      //     element["otherurl"] != null) {
+      Project thisproject = Project(
+          description: element["description"],
+          githuburl: element["githuburl"],
+          lang: element["lang"],
+          otherurl: element["otherurl"],
+          star: element["star"].toString(),
+          title: element["title"]);
+      print(thisproject);
+      myprojects.add(thisproject);
+      // }
+    });
+    print(myprojects);
+    setState(() {
+      load = true;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getprogects();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,53 +155,23 @@ class _ProjectsState extends State<Projects> {
         backgroundColor: Color(0xff252525),
         title: Text('Projects'),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.only(bottom: 20, top: 10),
-          alignment: Alignment.center,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              projetCard(
-                  'FLUTTER',
-                  'Agroscan',
-                  'An Application For Farmer to Pridict of crop deisease ',
-                  '3',
-                  "https://github.com/SauravSK1011/agroscanapp"),
-              projetCard(
-                  'FLUTTER',
-                  'AI Translator',
-                  'This is a Translator App Which is Build using Flutter, Speech To Text, Google ML Kit, Google Translator and Text To Speech.',
-                  '5',
-                  "https://github.com/SauravSK1011/AI_Translator"),
-              projetCard(
-                  'FLUTTER',
-                  'News App',
-                  'This is a News App created using Flutter and NewsApi.',
-                  '3',
-                  "https://github.com/SauravSK1011/News_App"),
-                  projetCard(
-                  'FLUTTER',
-                  'Mask Detection App',
-                  'This is a Mask Detection App which can detect is there mask is on the face or not.',
-                  '1',
-                  "https://github.com/SauravSK1011/Mask_Detection_App"),
-                  projetCard(
-                  'FLUTTER',
-                  'DataBase App',
-                  'This is Database app which can store data of students using nodejs as Api in mongodb as a Database',
-                  '1',
-                  "https://github.com/SauravSK1011/DataBase_App"),
-              projetCard(
-                  'Python',
-                  'Telegram Bot',
-                  'This is Telegram Bot.',
-                  '1',
-                  "https://github.com/ssktelegram/bot"),
-            ],
-          ),
-        ),
-      ),
+      body: load
+          ? Container(
+              margin: EdgeInsets.only(bottom: 20, top: 10),
+              alignment: Alignment.center,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return projetCard(
+                        myprojects[index].lang,
+                        myprojects[index].title,
+                        myprojects[index].description,
+                        myprojects[index].star,
+                        myprojects[index].githuburl);
+                  }),
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 }

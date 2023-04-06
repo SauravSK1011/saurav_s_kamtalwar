@@ -72,8 +72,16 @@ class _AboutState extends State<About> {
                   ),
                   SizedBox(
                     child: TextButton(
-                      onPressed: () {},
-                      child: Text('Hire Me'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => githubpage(
+                                      url:
+                                          "https://drive.google.com/drive/folders/1RKh9JYY2qHAvn9d7eENPw2pg_A0mg0Yr?usp=sharing",
+                                    )));
+                      },
+                      child: Text('Resume'),
                       style: TextButton.styleFrom(
                         primary: Colors.black,
                         backgroundColor: Colors.white, // Background Color
@@ -124,7 +132,6 @@ class _AboutState extends State<About> {
                                           url:
                                               "https://github.com/SauravSK1011",
                                         )));
-
                           },
                           icon: Icon(
                             FontAwesomeIcons.github,
@@ -154,7 +161,6 @@ class _AboutState extends State<About> {
                                           url:
                                               "https://www.facebook.com/saurav.kamtalwar/",
                                         )));
-
                           },
                           icon: Icon(
                             FontAwesomeIcons.facebook,
