@@ -191,9 +191,17 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       aboutAchivements('2', ' Paper Published'),
+                      Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text(
+                            "Gate qualified in 3rd year",
+                            style: TextStyle(
+                              fontFamily: "Soho",fontWeight: FontWeight.bold
+                            ),
+                          ))
                     ],
                   ),
                   SizedBox(
@@ -260,7 +268,7 @@ class _HomeState extends State<Home> {
                         children: [
                           mySpec(FontAwesomeIcons.java, 'Java'),
                           mySpec(FontAwesomeIcons.python, 'Python'),
-Container(
+                          Container(
                             child: Card(
                               margin: EdgeInsets.all(0),
                               color: Color(0xff252525),
@@ -293,7 +301,8 @@ Container(
                             ),
                             height: 115,
                             width: 105,
-                          )                        ],
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 10,
@@ -301,7 +310,7 @@ Container(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          mySpec(FontAwesomeIcons.cloud, 'Google Cloud'),
+                          mySpec(FontAwesomeIcons.cloud, 'GoogleCloud'),
                           mySpec(FontAwesomeIcons.nodeJs, 'NodeJS'),
                           mySpec(FontAwesomeIcons.database, 'MongoDB'),
                         ],
